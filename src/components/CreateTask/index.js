@@ -5,6 +5,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { uiActions } from "../../changers/ui/actions";
+import CreateTaskForm from "./CreateTaskForm";
 
 const mapStateToProps = (state) => ({
   uiState: state.uiState
@@ -17,7 +18,7 @@ const mapDispatchToProps = (dispatch) => ({
 class AddNewTask extends Component {
   static propTypes = {
     uiState: PropTypes.shape({
-      isModalAddNewTask: PropTypes.bool
+      isModalCreateTask: PropTypes.bool
     }),
     uiActions: PropTypes.shape({
       closeModalAddNewTask: PropTypes.func.isRequired
@@ -25,17 +26,17 @@ class AddNewTask extends Component {
   };
   
   static getDerivedStateFromProps(newProps, state) {
-    const storedIsModalAddNewTask = newProps.uiState.get('isModalAddNewTask')
-    if(!state.isModalAddNewTask || storedIsModalAddNewTask !== state.isModalAddNewTask)
+    const storedIsModalAddNewTask = newProps.uiState.get('isModalCreateTask')
+    if(!state.isModalCreateTask || storedIsModalAddNewTask !== state.isModalCreateTask)
       return ({
-        isModalAddNewTask: storedIsModalAddNewTask
+        isModalCreateTask: storedIsModalAddNewTask
       })
     
     return null
   }
   
   state = {
-    isModalAddNewTask: undefined
+    isModalCreateTask: undefined
   }
   
   toggle = () =>
@@ -46,12 +47,7 @@ class AddNewTask extends Component {
     return (
       <Modal isOpen={isModalAddNewTask} toggle={this.toggle} className={this.props.className}>
         <ModalHeader toggle={this.toggle}>Add new task</ModalHeader>
-        <ModalBody>
-          Input new task data
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={this.toggle}>Confirm</Button>
-        </ModalFooter>
+        <CreateTaskForm/>
       </Modal>
     );
   }

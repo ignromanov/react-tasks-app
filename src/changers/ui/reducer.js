@@ -2,7 +2,7 @@ import { fromJS } from 'immutable';
 import {types} from "./types";
 
 const initState = fromJS({
-  isModalAddNewTask: false,
+  isModalCreateTask: false,
   isModalLogin: false
 })
 
@@ -12,10 +12,10 @@ export const uiReducer = (state = initState, action) => {
   switch (type) {
     // Add new task
     case types.OPEN_MODAL_ADD_NEW_TASK:
-      return state.set('isModalAddNewTask', true)
+      return state.set('isModalCreateTask', true)
     
     case types.CLOSE_MODAL_ADD_NEW_TASK:
-      return state.set('isModalAddNewTask', false)
+      return state.set('isModalCreateTask', false)
   
     // Login
     case types.OPEN_MODAL_LOGIN:

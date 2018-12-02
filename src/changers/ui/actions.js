@@ -1,7 +1,7 @@
 import { types } from "./types"
 
 export const uiActions = {
-  openModalAddNewTask: () => ({
+  openModalCreateTask: () => ({
     type: types.OPEN_MODAL_ADD_NEW_TASK
   }),
   

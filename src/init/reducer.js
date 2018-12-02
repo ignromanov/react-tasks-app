@@ -10,6 +10,6 @@ import {loginReducer} from "../changers/login/reducer";
 
 export const reducer = combineReducers({
   loginState: loginReducer,
-  tasks: tasksReducer,
+  tasksState: tasksReducer,
   uiState: uiReducer
 });

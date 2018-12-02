@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { Header, TasksList } from './../components'
 import Login from "../components/Login";
-import AddNewTask from "../components/AddNewTask";
+import AddNewTask from "../components/CreateTask";
 
 class MainTasksList extends Component {
   static defaultProps = {};
