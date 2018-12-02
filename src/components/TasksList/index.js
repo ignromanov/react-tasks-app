@@ -6,7 +6,7 @@ import BootstrapTable from 'react-bootstrap-table-next'
 import {Button} from 'reactstrap'
 
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css'
-import {uiActions} from "../../requests/ui/actions";
+import {uiActions} from "../../changers/ui/actions";
 import {bindActionCreators} from "redux";
 
 

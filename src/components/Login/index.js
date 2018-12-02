@@ -6,7 +6,7 @@ import {
   ModalHeader,
 } from 'reactstrap';
 import { bindActionCreators } from 'redux'
-import { uiActions } from "../../requests/ui/actions";
+import { uiActions } from "../../changers/ui/actions";
 import LoginForm from "./LoginForm";
 
 const mapStateToProps = (state) => ({

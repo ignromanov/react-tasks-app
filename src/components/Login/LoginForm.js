@@ -11,7 +11,7 @@ import {
   Input
 } from 'reactstrap';
 import { bindActionCreators } from 'redux'
-import {loginActions} from "../../requests/login/actions";
+import {loginActions} from "../../changers/login/actions";
 
 
 const mapStateToProps = (state) => ({

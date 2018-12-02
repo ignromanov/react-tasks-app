@@ -11,9 +11,9 @@ import {
   DropdownItem } from 'reactstrap';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { uiActions } from "../../requests/ui/actions";
+import { uiActions } from "../../changers/ui/actions";
 import PropTypes from 'prop-types';
-import {loginActions} from "../../requests/login/actions";
+import {loginActions} from "../../changers/login/actions";
 
 
 const mapStateToProps = (state) => ({

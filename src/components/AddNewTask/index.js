@@ -4,7 +4,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { uiActions } from "../../requests/ui/actions";
+import { uiActions } from "../../changers/ui/actions";
 
 const mapStateToProps = (state) => ({
   uiState: state.uiState
