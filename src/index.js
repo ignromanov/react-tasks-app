@@ -1,12 +1,28 @@
+// Core
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { store } from './init';
+// antd
+// import { LocaleProvider } from 'antd';
+// import ruRU from 'antd/lib/locale-provider/ru_RU';
+// Styles
+// import 'antd/dist/antd.css';
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import 'bootstrap/dist/css/bootstrap.css';
+// Theme
+// import './theme/init';
+// Page
+import { MainOrderedList } from './pages';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// ReactDOM.render(
+//   <Provider store = { store }>
+//     <MainOrderedList/>
+//   </Provider>,
+//   document.getElementById('root'),
+// );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+ReactDOM.render(
+  <MainOrderedList/>,
+  document.getElementById('root'),
+);
