@@ -15,14 +15,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 // Page
 import { MainOrderedList } from './pages';
 
-// ReactDOM.render(
-//   <Provider store = { store }>
-//     <MainOrderedList/>
-//   </Provider>,
-//   document.getElementById('root'),
-// );
-
 ReactDOM.render(
-  <MainOrderedList/>,
+  <Provider store = { store }>
+    <MainOrderedList/>
+  </Provider>,
   document.getElementById('root'),
 );

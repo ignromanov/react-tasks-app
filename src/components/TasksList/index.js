@@ -1,22 +1,54 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { card } from '../decorators'
+import {connect} from 'react-redux'
 import BootstrapTable from 'react-bootstrap-table-next'
+import {Button} from 'reactstrap'
 
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css'
+import {uiActions} from "../../requests/ui/actions";
+import {bindActionCreators} from "redux";
+
+
+const mapStateToProps = (state) => ({
+  uiState: state.uiState
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  uiActions: bindActionCreators({...uiActions}, dispatch)
+})
+
 
 class TasksList extends Component {
   static defaultProps = {};
   
-  static propTypes = {};
+  static propTypes = {
+    uiState: PropTypes.shape({
+      isModalAddNewTask: PropTypes.bool
+    }),
+    uiActions: PropTypes.shape({
+      openModalAddNewTask: PropTypes.func.isRequired
+    })
+  };
   
-  constructor(props) {
-    super(props);
-    
-    this.state = {
-      sortField: undefined,
-      sortOrder: undefined
-    };
+  static getDerivedStateFromProps(newProps, state) {
+    const storedIsModalAddNewTask = newProps.uiState.get('isModalAddNewTask')
+    if(!state.isModalAddNewTask || storedIsModalAddNewTask !== state.isModalAddNewTask)
+      return ({
+        isModalAddNewTask: storedIsModalAddNewTask
+      })
+  
+    return null
+  }
+  
+  state = {
+    sortField: undefined,
+    sortOrder: undefined,
+    isModalAddNewTask: undefined
+  }
+  
+  handleAddNewTaskOnClick = () => {
+    this.props.uiActions.openModalAddNewTask()
   }
   
   onSortChange = (sortField, sortOrder) => {
@@ -71,6 +103,7 @@ class TasksList extends Component {
       <div>
         <p style={ { color: 'red' } }>sort: sortField={ this.state.sortField }, sortOrder={ this.state.sortOrder }</p>
         <BootstrapTable keyField='id' data={ products } columns={ columns } />
+        <Button color="primary" onClick={this.handleAddNewTaskOnClick}>Add new task</Button>
       </div>
     );
   }
@@ -78,4 +111,10 @@ class TasksList extends Component {
 
 
 // export default TasksList;
-export default card('Список задач', TasksList)
+export default card(
+  'Список задач',
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(TasksList)
+)
