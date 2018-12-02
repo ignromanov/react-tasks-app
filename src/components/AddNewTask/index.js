@@ -44,18 +44,15 @@ class AddNewTask extends Component {
   render() {
     const { isModalAddNewTask } = this.state
     return (
-      <>
-        <Button color="danger" onClick={this.toggle}>Open add new task</Button>
-        <Modal isOpen={isModalAddNewTask} toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle}>Add new task</ModalHeader>
-          <ModalBody>
-            Input new task data
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={this.toggle}>Confirm</Button>
-          </ModalFooter>
-        </Modal>
-      </>
+      <Modal isOpen={isModalAddNewTask} toggle={this.toggle} className={this.props.className}>
+        <ModalHeader toggle={this.toggle}>Add new task</ModalHeader>
+        <ModalBody>
+          Input new task data
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={this.toggle}>Confirm</Button>
+        </ModalFooter>
+      </Modal>
     );
   }
 }

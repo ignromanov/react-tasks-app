@@ -1,9 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {
+  Modal,
+  ModalHeader,
+} from 'reactstrap';
 import { bindActionCreators } from 'redux'
 import { uiActions } from "../../requests/ui/actions";
+import LoginForm from "./LoginForm";
 
 const mapStateToProps = (state) => ({
   uiState: state.uiState
@@ -34,23 +38,20 @@ class Login extends Component {
   }
   
   state = {
-    isModalLogin: undefined
+    isModalLogin: undefined,
+    username: '',
+    password: ''
   }
   
-  toggle = () =>
+  closeModal = () =>
     this.props.uiActions.closeModalLogin()
   
   render() {
     const { isModalLogin } = this.state
     return (
-      <Modal isOpen={isModalLogin} toggle={this.toggle} className={this.props.className}>
-        <ModalHeader toggle={this.toggle}>Login</ModalHeader>
-        <ModalBody>
-          Input your data
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={this.toggle}>Login</Button>
-        </ModalFooter>
+      <Modal isOpen={isModalLogin} toggle={this.closeModal} className={this.props.className}>
+        <ModalHeader toggle={this.closeModal}>Login</ModalHeader>
+        <LoginForm/>
       </Modal>
     );
   }
