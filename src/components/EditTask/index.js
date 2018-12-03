@@ -8,7 +8,7 @@ import { uiActions }          from '../../changers/ui/actions'
 import EditTaskForm           from './EditTaskForm'
 
 const mapStateToProps = ( state ) => ({
-  uiState: state.uiState,
+  isModalEditTask: state.uiState.get( 'isModalEditTask' ),
 })
 
 const mapDispatchToProps = ( dispatch ) => ({
@@ -17,31 +17,17 @@ const mapDispatchToProps = ( dispatch ) => ({
 
 class EditTask extends Component {
   static propTypes = {
-    uiState:   PropTypes.shape( {
-      isModalEditTask: PropTypes.bool,
-    } ),
-    uiActions: PropTypes.shape( {
+    isModalEditTask: PropTypes.bool.isRequired,
+    uiActions:       PropTypes.shape( {
       closeModalEditTask: PropTypes.func.isRequired,
     } ),
   }
-  state = {
-    isModalEditTask: undefined,
-  }
+
   closeModal = () =>
     this.props.uiActions.closeModalEditTask()
   
-  static getDerivedStateFromProps( newProps, state ) {
-    const storedIsModalAddNewTask = newProps.uiState.get( 'isModalEditTask' )
-    if( !state.isModalEditTask || storedIsModalAddNewTask !== state.isModalEditTask )
-      return ({
-        isModalEditTask: storedIsModalAddNewTask,
-      })
-    
-    return null
-  }
-  
   render() {
-    const { isModalEditTask } = this.state
+    const { isModalEditTask } = this.props
     return (
       <Modal isOpen={isModalEditTask} toggle={this.closeModal} className={this.props.className}>
         <ModalHeader toggle={this.closeModal}>Edit task</ModalHeader>

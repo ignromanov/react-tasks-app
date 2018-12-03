@@ -1,3 +1,4 @@
+import PropTypes                                      from 'prop-types'
 import React, { Component }                           from 'react'
 import { connect }                                    from 'react-redux'
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap'
@@ -6,7 +7,10 @@ import { tasksActions }                               from '../../changers/tasks
 
 
 const mapStateToProps = ( state ) => ({
-  tasksState: state.tasksState,
+  isLoaded:         state.tasksState.get( 'isLoaded' ),
+  page:             parseInt( state.tasksState.get( 'page' ) ),
+  total_task_count: parseInt( state.tasksState.get( 'total_task_count' ) ),
+  tasks_per_page:   parseInt( state.tasksState.get( 'tasks_per_page' ) ),
 })
 
 const mapDispatchToProps = ( dispatch ) => ({
@@ -14,19 +18,19 @@ const mapDispatchToProps = ( dispatch ) => ({
 })
 
 class PagePagination extends Component {
-  static defaultProps = {}
-  
-  static propTypes = {}
-  state = {
-    page: null,
+  static propTypes = {
+    page:             PropTypes.number.isRequired,
+    isLoaded:         PropTypes.bool.isRequired,
+    total_task_count: PropTypes.number.isRequired,
+    tasks_per_page:   PropTypes.number.isRequired,
   }
+  
   handleChangePage = page => () =>
     this.props.tasksActions.changePage( page )
   
   getPaginationItems = () => {
-    const { tasksState } = this.props
-    const { page } = this.state
-    const totalPages = Math.ceil( tasksState.get( 'total_task_count' ) / tasksState.get( 'tasks_per_page' ) )
+    const { page, total_task_count, tasks_per_page } = this.props
+    const totalPages = Math.ceil( total_task_count / tasks_per_page )
     
     // first arrow
     let pagMap = [
@@ -57,16 +61,9 @@ class PagePagination extends Component {
     return pagMap
   }
   
-  static getDerivedStateFromProps( newProps, state ) {
-    const { tasksState } = newProps
-    if( tasksState.get( 'page' ) !== state.page )
-      return { page: tasksState.get( 'page' ) }
-    return null
-  }
-  
   render() {
-    const { tasksState } = this.props
-    if( !tasksState.get( 'isLoaded' ) ) return null
+    const { isLoaded } = this.props
+    if( !isLoaded ) return null
     return (
       <Pagination aria-label="Tasks navigation">
         {this.getPaginationItems()}

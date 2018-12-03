@@ -1,3 +1,5 @@
 import { fetchActor } from './../changers/tasks/actors'
 
-export const actors = [fetchActor]
+export const actors = [
+  fetchActor
+]

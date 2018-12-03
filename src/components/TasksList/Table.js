@@ -34,35 +34,34 @@ class Table extends Component {
         dataField: 'id',
         text:      'id',
         sort:      true,
-        onSort:    ( field, order ) => this.onSortChange( field, order ),
+        onSort:    this.onSortChange,
       }, {
         dataField: 'username',
         text:      'Username',
         sort:      true,
-        onSort:    ( field, order ) => this.onSortChange( field, order ),
+        onSort:    this.onSortChange,
       }, {
         dataField: 'email',
         text:      'E-mail',
         sort:      true,
-        onSort:    ( field, order ) => this.onSortChange( field, order ),
+        onSort:    this.onSortChange,
       }, {
         dataField: 'text',
         text:      'Text',
       }, {
         dataField: 'status',
         text:      'Confirmed',
-        sort:      true,
         hidden:    true,
-        onSort:    ( field, order ) => this.onSortChange( field, order ),
       },
     ]
   }
+  
   getData = () => {
     const { tasksState } = this.props
     return tasksState.get( 'isLoaded' ) && !tasksState.get( 'isLoading' )
-           ? tasksState.get( 'tasks' ).toJS()
-           : []
+           ? tasksState.get( 'tasks' ).toJS() : []
   }
+  
   getNoDataIndication = () => {
     const { tasksState } = this.props
     return tasksState
@@ -72,6 +71,7 @@ class Table extends Component {
               ? `Not loaded (${tasksState.get( 'error' )})`
               : 'No data')
   }
+  
   getDefaultSorted = () => {
     const { tasksState } = this.props
     return [
@@ -81,14 +81,16 @@ class Table extends Component {
       },
     ]
   }
-  onSortChange = ( sortField, sortOrder ) => {
+  
+  onSortChange = ( sortField, sortOrder ) =>
     this.props.tasksActions.changeFilter( {
       sort_field:     sortField,
       sort_direction: sortOrder,
     } )
-  }
+  
   confirmedClasses = ( row ) =>
     (row.status === 10 && 'bg-success') || ''
+  
   rowEvents = {
     onClick: ( e, row ) => {
       const { loginState, uiActions } = this.props
@@ -101,6 +103,7 @@ class Table extends Component {
     return (
       <BootstrapTable
         bootstrap4
+        hover
         keyField='id'
         data={this.getData()}
         columns={this.getColumns()}

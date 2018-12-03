@@ -6,16 +6,6 @@ const initState = fromJS( {
   isLoading:        false,
   isLoaded:         false,
   error:            '',
-  create:           {
-    isCreating: false,
-    isCreated:  false,
-    error:      undefined,
-  },
-  edit:             {
-    isEditing: false,
-    isEdited:  false,
-    error:     undefined,
-  },
   total_task_count: '3',
   page:             '1',
   tasks_per_page:   '3',
@@ -37,10 +27,21 @@ const initState = fromJS( {
       status:   0,
     },
   ],
+  create:           {
+    isCreating: false,
+    isCreated:  false,
+    error:      undefined,
+  },
+  edit:             {
+    isEditing: false,
+    isEdited:  false,
+    error:     undefined,
+  },
 } )
 
 export const tasksReducer = ( state = initState, action ) => {
   const { payload, response, error } = action
+  
   switch( action.type ) {
     // fetch
     case types.FETCH_TASKS + types.REQUEST:
@@ -77,7 +78,7 @@ export const tasksReducer = ( state = initState, action ) => {
         .set( 'isLoaded', false )
     
     case types.CREATE_TASK + types.FAIL:
-      toast.error( `Cannot create task:\n${error}` )
+      toast.error( `Cannot create task: ${error}` )
       return state
         .setIn( ['create', 'error'], error )
         .setIn( ['create', 'isCreating'], false )
@@ -106,7 +107,9 @@ export const tasksReducer = ( state = initState, action ) => {
     
     // change
     case types.CHANGE_PAGE:
-      return state.set( 'page', payload.page )
+      return state
+        .set( 'page', payload.page )
+        .set( 'isLoaded', false )
     
     case types.CHANGE_FILTER:
       return state

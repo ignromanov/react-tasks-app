@@ -1,5 +1,5 @@
 import PropTypes                                                         from 'prop-types'
-import React, { Component }                                              from 'react'
+import React, { PureComponent }                                              from 'react'
 import { connect }                                                       from 'react-redux'
 import { Button, Form, FormGroup, Input, Label, ModalBody, ModalFooter } from 'reactstrap'
 import { bindActionCreators }                                            from 'redux'
@@ -15,7 +15,7 @@ const mapDispatchToProps = ( dispatch ) => ({
   uiActions:    bindActionCreators( { ...uiActions }, dispatch ),
 })
 
-class EditTaskForm extends Component {
+class EditTaskForm extends PureComponent {
   static propTypes = {
     tasksActions: PropTypes.shape( {
       editTask: PropTypes.func.isRequired,
@@ -31,14 +31,19 @@ class EditTaskForm extends Component {
     text:     '',
     status:   0,
   }
+  
   handleUsernameChange = ( ev ) =>
     this.setState( { username: ev.target.value } )
+  
   handleEmailChange = ( ev ) =>
     this.setState( { email: ev.target.value } )
+  
   handleTaskChange = ( ev ) =>
     this.setState( { text: ev.target.value } )
+  
   handleStatusChange = ( ev ) =>
     this.setState( { status: ev.target.checked ? 10 : 0 } )
+  
   confirmEditTask = () => {
     const { id, username, email, text, status } = this.state
     const { tasksActions, uiActions } = this.props
@@ -52,10 +57,12 @@ class EditTaskForm extends Component {
   static getDerivedStateFromProps( newProps, state ) {
     const { uiState, tasksState } = newProps
     const editTaskId = uiState.get( 'editTaskId' )
+    const getTaskById = ( id ) =>
+      tasksState.get( 'tasks' ).toJS()
+        .find( task => task.id === id )
     
     if( editTaskId && editTaskId !== state.id )
-      return tasksState.get( 'tasks' ).toJS()
-        .find( task => task.id === editTaskId )
+      return getTaskById( editTaskId )
     
     return null
   }
@@ -109,7 +116,7 @@ class EditTaskForm extends Component {
                   defaultChecked={status === 10}
                   onChange={this.handleStatusChange}
                 />{' '}
-                Perform the task
+                Confirm the task
               </Label>
             </FormGroup>
           </Form>

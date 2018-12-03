@@ -1,8 +1,9 @@
 import { fromJS } from 'immutable'
+import { toast }  from 'react-toastify'
 import { types }  from './types'
 
 const initState = fromJS( {
-  isLogin:  true,
+  isLogin:  false,
   username: '',
 } )
 
@@ -11,6 +12,7 @@ export const loginReducer = ( state = initState, action ) => {
   
   switch( type ) {
     case types.LOGIN:
+      toast.success( `Welcome ${payload.username}!` )
       return state
         .set( 'username', payload.username )
         .set( 'isLogin', true )

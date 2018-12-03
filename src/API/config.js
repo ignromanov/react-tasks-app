@@ -1,3 +1,5 @@
-export const API_REFERENCE = 'https://uxcandy.com/~shapoval/test-task-backend'
-export const API_DEVELOPER = '&developer=Name'
-export const API_TOKEN = encodeURIComponent( 'beejee' )
+export const conf = {
+  API_REFERENCE: 'https://uxcandy.com/~shapoval/test-task-backend',
+  API_DEVELOPER: '&developer=Name',
+  API_TOKEN: encodeURIComponent( 'beejee' )
+}

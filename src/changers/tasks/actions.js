@@ -20,44 +20,26 @@ export const tasksActions = {
     }
   },
   
-  createTask: task => {
-    return dispatch => {
-      return dispatch( {
-        type:    types.CREATE_TASK,
-        payload: { task },
-        callAPI: tasksAPI.create,
-      } )
-    }
-  },
+  createTask: task => ({
+    type:    types.CREATE_TASK,
+    payload: { task },
+    callAPI: tasksAPI.create,
+  }),
   
-  editTask: task => {
-    return dispatch => {
-      return dispatch( {
-        type:    types.EDIT_TASK,
-        payload: { task },
-        callAPI: tasksAPI.edit,
-      } )
-    }
-  },
+  editTask: task => ({
+    type:    types.EDIT_TASK,
+    payload: { task },
+    callAPI: tasksAPI.edit,
+  }),
   
-  changePage: page => {
-    return dispatch => {
-      dispatch( {
-        type:    types.CHANGE_PAGE,
-        payload: { page },
-      } )
-      
-      dispatch( tasksActions.fetchTasks() )
-    }
-  },
+  changePage: page => ({
+    type:    types.CHANGE_PAGE,
+    payload: { page },
+  }),
   
-  changeFilter: ( filter ) => {
-    return dispatch => {
-      return dispatch( {
-        type:    types.CHANGE_FILTER,
-        payload: { filter },
-      } )
-    }
-  },
+  changeFilter: filter => ({
+    type:    types.CHANGE_FILTER,
+    payload: { filter },
+  }),
   
 }

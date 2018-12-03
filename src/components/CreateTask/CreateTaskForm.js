@@ -1,5 +1,5 @@
 import PropTypes                                                         from 'prop-types'
-import React, { Component }                                              from 'react'
+import React, { PureComponent }                                              from 'react'
 import { connect }                                                       from 'react-redux'
 import { Button, Form, FormGroup, Input, Label, ModalBody, ModalFooter } from 'reactstrap'
 import { bindActionCreators }                                            from 'redux'
@@ -11,7 +11,7 @@ const mapDispatchToProps = ( dispatch ) => ({
   uiActions:    bindActionCreators( { ...uiActions }, dispatch ),
 })
 
-class CreateTaskForm extends Component {
+class CreateTaskForm extends PureComponent {
   static propTypes = {
     tasksActions: PropTypes.shape( {
       createTask: PropTypes.func.isRequired,
@@ -101,7 +101,9 @@ class CreateTaskForm extends Component {
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={this.confirmCreateTask}>Confirm</Button>
+          <Button color="primary" onClick={this.confirmCreateTask}>
+            Confirm
+          </Button>
         </ModalFooter>
       </>
     )

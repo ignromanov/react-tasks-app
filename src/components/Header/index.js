@@ -1,3 +1,4 @@
+import PropTypes              from 'prop-types'
 import React                  from 'react'
 import { connect }            from 'react-redux'
 import {
@@ -27,20 +28,33 @@ const mapDispatchToProps = ( dispatch ) => ({
 })
 
 class Header extends React.Component {
-  static propTypes = {}
+  static propTypes = {
+    uiActions:    PropTypes.shape( {
+      openModalLogin: PropTypes.func.isRequired,
+    } ),
+    loginActions: PropTypes.shape( {
+      confirmLogout: PropTypes.func.isRequired,
+    } ),
+  }
+  
   state = {
     username:       '',
     isLogin:        false,
     isDropDownOpen: false,
   }
+  
   handleToggle = () =>
     this.setState( {
       isDropDownOpen: !this.state.isDropDownOpen,
     } )
+  
   handleLoginClick = () => {
-    const { uiState, uiActions, loginState, loginActions } = this.props
-    if( !loginState.get( 'isLogin' ) ) {
-      if( !uiState.get( 'isModalLogin' ) ) uiActions.openModalLogin()
+    const { uiState, uiActions, loginActions } = this.props
+    const { isLogin } = this.state
+    
+    if( !isLogin ) {
+      if( !uiState.get( 'isModalLogin' ) )
+        uiActions.openModalLogin()
     } else {
       loginActions.confirmLogout()
     }
@@ -49,8 +63,8 @@ class Header extends React.Component {
   static getDerivedStateFromProps( newProps, state ) {
     const { loginState } = newProps
     if(
-      !state.isLogin !== loginState.get( 'isLogin' ) ||
-      !state.username !== loginState.get( 'username' )
+      state.isLogin !== loginState.get( 'isLogin' ) ||
+      state.username !== loginState.get( 'username' )
     ) return ({
       isLogin:  loginState.get( 'isLogin' ),
       username: loginState.get( 'username' ),

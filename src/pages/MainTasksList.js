@@ -1,11 +1,8 @@
-import React, { Component }  from 'react'
-import { ToastContainer }    from 'react-toastify'
+import React, { Component }                               from 'react'
+import { ToastContainer }                                 from 'react-toastify'
 
 import 'react-toastify/dist/ReactToastify.css'
-import CreateTask            from '../components/CreateTask'
-import EditTask              from '../components/EditTask'
-import Login                 from '../components/Login'
-import { Header, TasksList } from './../components'
+import { CreateTask, EditTask, Header, Login, TasksList } from './../components'
 
 class MainTasksList extends Component {
   static defaultProps = {}
@@ -16,7 +13,7 @@ class MainTasksList extends Component {
   
   render() {
     return (
-      <div>
+      <div className='main-tasks-list'>
         <Header/>
         <Login/>
         <CreateTask/>

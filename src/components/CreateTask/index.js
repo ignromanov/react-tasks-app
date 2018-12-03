@@ -8,7 +8,7 @@ import { uiActions }          from '../../changers/ui/actions'
 import CreateTaskForm         from './CreateTaskForm'
 
 const mapStateToProps = ( state ) => ({
-  uiState: state.uiState,
+  isModalCreateTask: state.uiState.get('isModalCreateTask'),
 })
 
 const mapDispatchToProps = ( dispatch ) => ({
@@ -17,33 +17,19 @@ const mapDispatchToProps = ( dispatch ) => ({
 
 class CreateTask extends Component {
   static propTypes = {
-    uiState:   PropTypes.shape( {
-      isModalCreateTask: PropTypes.bool,
-    } ),
+    isModalCreateTask: PropTypes.bool.isRequired,
     uiActions: PropTypes.shape( {
       closeModalCreateTask: PropTypes.func.isRequired,
     } ),
   }
-  state = {
-    isModalCreateTask: undefined,
-  }
+
   toggle = () =>
     this.props.uiActions.closeModalCreateTask()
   
-  static getDerivedStateFromProps( newProps, state ) {
-    const storedIsModalAddNewTask = newProps.uiState.get( 'isModalCreateTask' )
-    if( !state.isModalCreateTask || storedIsModalAddNewTask !== state.isModalCreateTask )
-      return ({
-        isModalCreateTask: storedIsModalAddNewTask,
-      })
-    
-    return null
-  }
-  
   render() {
-    const { isModalCreateTask } = this.state
+    const { isModalCreateTask } = this.props
     return (
-      <Modal isOpen={isModalCreateTask} toggle={this.toggle} className={this.props.className}>
+      <Modal isOpen={isModalCreateTask} toggle={this.toggle}>
         <ModalHeader toggle={this.toggle}>Create task</ModalHeader>
         <CreateTaskForm/>
       </Modal>

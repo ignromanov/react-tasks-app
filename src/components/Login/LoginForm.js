@@ -1,4 +1,5 @@
-import React, { Component }                                              from 'react'
+import PropTypes                                                         from 'prop-types'
+import React, { PureComponent }                                              from 'react'
 import { connect }                                                       from 'react-redux'
 import { Button, Form, FormGroup, Input, Label, ModalBody, ModalFooter } from 'reactstrap'
 import { bindActionCreators }                                            from 'redux'
@@ -11,10 +12,15 @@ const mapDispatchToProps = ( dispatch ) => ({
   uiActions:    bindActionCreators( { ...uiActions }, dispatch ),
 })
 
-class LoginForm extends Component {
-  static defaultProps = {}
-  
-  static propTypes = {}
+class LoginForm extends PureComponent {
+  static propTypes = {
+    loginActions: PropTypes.shape( {
+      confirmLogin: PropTypes.func.isRequired,
+    } ),
+    uiActions:    PropTypes.shape( {
+      closeModalLogin: PropTypes.func.isRequired,
+    } ),
+  }
   
   state = {
     username: '',

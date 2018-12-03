@@ -6,11 +6,9 @@ import PagePagination       from './PagePagination'
 import Table                from './Table'
 
 class TasksList extends Component {
-  static defaultProps = {}
-  
   render() {
     return (
-      <div>
+      <div className='tasks-list'>
         <Table/>
         <PagePagination/>
         <Create/>
@@ -19,6 +17,4 @@ class TasksList extends Component {
   }
 }
 
-
-// export default TasksList;
 export default card( 'Список задач', TasksList )
