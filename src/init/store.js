@@ -1,48 +1,42 @@
-import { createStore } from 'redux';
+import { applyMiddleware, compose, createStore } from 'redux'
 
-import { reducer } from './reducer';
+import { logger } from 'redux-logger'
+import thunk      from 'redux-thunk'
+import tasksApi   from '../changers/tasks/tasksApi'
+import { actors } from './actors'
 
-import { saga } from './saga';
+import { reducer } from './reducer'
 
-// // Middleware
-// import { enhancedStore, sagaMiddleware } from './middleware/core';
 
-// Core
-import { applyMiddleware, compose } from 'redux';
-
-// Middleware
-import { logger } from 'redux-logger';
-import thunk from 'redux-thunk'
-// import { customThunk } from './custom';
-// import createSagaMiddleware from 'redux-saga';
-
-// const logger = createLogger({
-//   duration: true,
-//   collapse: true,
-//   colors:   {
-//     title:     () => '#139BFE',
-//     prevState: () => '#1C5FAF',
-//     action:    () => '#149945',
-//     nextState: () => '#A47104',
-//     error:     () => '#FF0005',
-//   },
-// });
-// const sagaMiddleware = createSagaMiddleware();
-const devtools = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
-const composeEnhancers = !process.env.NODE_ENV || process.env.NODE_ENV === 'development' && devtools ? devtools : compose;
-
-// const middleware = [ sagaMiddleware, customThunk  ];
-const middleware = [
-  thunk
+const configureStore = () => {
+  const devtools = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  const composeEnhancers =
+          (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') && devtools ? devtools : compose
   
-]// sagaMiddleware ];
-
-if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  middleware.push(logger);
+  const middleware = [
+    thunk,
+    tasksApi,
+  ]
+  if( !process.env.NODE_ENV || process.env.NODE_ENV === 'development' ) {
+    middleware.push( logger )
+  }
+  
+  const enhancedStore = composeEnhancers( applyMiddleware( ...middleware ) )
+  const store = createStore( reducer, enhancedStore )
+  
+  store.subscribe( () =>
+    actors.forEach( actor => actor( store.getState(), store.dispatch ) ),
+  )
+  
+  if( process.env.NODE_ENV !== 'production' ) {
+    if( module.hot ) {
+      module.hot.accept( './reducer', () => {
+        store.replaceReducer( reducer )
+      } )
+    }
+  }
+  
+  return store
 }
 
-const enhancedStore = composeEnhancers(applyMiddleware(...middleware));
-
-export const store = createStore(reducer, enhancedStore);
-
-// sagaMiddleware.run(saga);
+export default configureStore

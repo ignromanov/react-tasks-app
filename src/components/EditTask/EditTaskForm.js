@@ -6,51 +6,62 @@ import { bindActionCreators }                                            from 'r
 import { tasksActions }                                                  from '../../changers/tasks/actions'
 import { uiActions }                                                     from '../../changers/ui/actions'
 
+const mapStateToProps = ( state ) => ({
+  tasksState: state.tasksState,
+  uiState:    state.uiState,
+})
 const mapDispatchToProps = ( dispatch ) => ({
   tasksActions: bindActionCreators( { ...tasksActions }, dispatch ),
   uiActions:    bindActionCreators( { ...uiActions }, dispatch ),
 })
 
-class CreateTaskForm extends Component {
+class EditTaskForm extends Component {
   static propTypes = {
     tasksActions: PropTypes.shape( {
-      createTask: PropTypes.func.isRequired,
+      editTask: PropTypes.func.isRequired,
     } ),
     uiActions:    PropTypes.shape( {
-      closeModalCreateTask: PropTypes.func.isRequired,
+      closeModalEditTask: PropTypes.func.isRequired,
     } ),
   }
-  
   state = {
+    id:       null,
     username: '',
     email:    '',
     text:     '',
-    image:    null,
+    status:   0,
   }
-  
   handleUsernameChange = ( ev ) =>
     this.setState( { username: ev.target.value } )
-  
   handleEmailChange = ( ev ) =>
     this.setState( { email: ev.target.value } )
-  
   handleTaskChange = ( ev ) =>
     this.setState( { text: ev.target.value } )
-  
-  handleChangeImage = ( ev ) =>
-    this.setState( { image: ev.target.files.length && ev.target.files[0] } )
-  
-  confirmCreateTask = () => {
-    const { username, email, text, image } = this.state
+  handleStatusChange = ( ev ) =>
+    this.setState( { status: ev.target.checked ? 10 : 0 } )
+  confirmEditTask = () => {
+    const { id, username, email, text, status } = this.state
     const { tasksActions, uiActions } = this.props
-    if( username && email && text && image ) {
-      tasksActions.createTask( { username, email, text, image } )
-      uiActions.closeModalCreateTask()
+    
+    if( id && username && email && text ) {
+      tasksActions.editTask( { id, text, status } )
+      uiActions.closeModalEditTask()
     }
   }
   
+  static getDerivedStateFromProps( newProps, state ) {
+    const { uiState, tasksState } = newProps
+    const editTaskId = uiState.get( 'editTaskId' )
+    
+    if( editTaskId && editTaskId !== state.id )
+      return tasksState.get( 'tasks' ).toJS()
+        .find( task => task.id === editTaskId )
+    
+    return null
+  }
+  
   render() {
-    const { username, email, text } = this.state
+    const { username, email, text, status } = this.state
     
     return (
       <>
@@ -59,6 +70,7 @@ class CreateTaskForm extends Component {
             <FormGroup>
               <Label for="username">Username</Label>
               <Input
+                disabled
                 type="text"
                 name="username"
                 id="username"
@@ -70,6 +82,7 @@ class CreateTaskForm extends Component {
             <FormGroup>
               <Label for="email">E-mail</Label>
               <Input
+                disabled
                 type="email"
                 name="email"
                 id="email"
@@ -89,23 +102,24 @@ class CreateTaskForm extends Component {
                 value={text}
               />
             </FormGroup>
-            <FormGroup>
-              <Label for="image">Image</Label>
-              <Input
-                type="file"
-                name="image"
-                id="image"
-                onChange={this.handleChangeImage}
-              />
+            <FormGroup check>
+              <Label check>
+                <Input
+                  type="checkbox"
+                  defaultChecked={status === 10}
+                  onChange={this.handleStatusChange}
+                />{' '}
+                Perform the task
+              </Label>
             </FormGroup>
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={this.confirmCreateTask}>Confirm</Button>
+          <Button color="primary" onClick={this.confirmEditTask}>Confirm</Button>
         </ModalFooter>
       </>
     )
   }
 }
 
-export default connect( null, mapDispatchToProps )( CreateTaskForm )
+export default connect( mapStateToProps, mapDispatchToProps )( EditTaskForm )

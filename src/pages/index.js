@@ -1,3 +1,3 @@
-import MainOrderedList from './MainTasksList'
+import MainTasksList from './MainTasksList'
 
-export { MainOrderedList }
+export { MainTasksList }

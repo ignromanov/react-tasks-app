@@ -1,1 +1,1 @@
-export {tasksAPI} from './api'
+export { tasksAPI } from './api'

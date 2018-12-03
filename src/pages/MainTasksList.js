@@ -1,26 +1,31 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React, { Component }  from 'react'
+import { ToastContainer }    from 'react-toastify'
+
+import 'react-toastify/dist/ReactToastify.css'
+import CreateTask            from '../components/CreateTask'
+import EditTask              from '../components/EditTask'
+import Login                 from '../components/Login'
 import { Header, TasksList } from './../components'
-import Login from "../components/Login";
-import AddNewTask from "../components/CreateTask";
 
 class MainTasksList extends Component {
-  static defaultProps = {};
+  static defaultProps = {}
   
-  static propTypes = {};
+  static propTypes = {}
   
-  state = {};
+  state = {}
   
   render() {
     return (
       <div>
         <Header/>
         <Login/>
-        <AddNewTask/>
+        <CreateTask/>
+        <EditTask/>
         <TasksList/>
+        <ToastContainer/>
       </div>
-    );
+    )
   }
 }
 
-export default MainTasksList;
+export default MainTasksList

@@ -1,100 +1,116 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import {uiActions} from "../../changers/ui/actions";
-import BootstrapTable from 'react-bootstrap-table-next'
+import PropTypes              from 'prop-types'
+import React, { Component }   from 'react'
+import BootstrapTable         from 'react-bootstrap-table-next'
 
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css'
+import { connect }            from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { tasksActions }       from '../../changers/tasks/actions'
+import { uiActions }          from '../../changers/ui/actions'
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = ( state ) => ({
   tasksState: state.tasksState,
-  uiState: state.uiState
+  loginState: state.loginState,
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  uiActions: bindActionCreators({...uiActions}, dispatch)
+const mapDispatchToProps = ( dispatch ) => ({
+  uiActions:    bindActionCreators( { ...uiActions }, dispatch ),
+  tasksActions: bindActionCreators( { ...tasksActions }, dispatch ),
 })
 
 class Table extends Component {
-  static defaultProps = {};
-  
   static propTypes = {
-    uiState: PropTypes.shape({
-      isModalCreateTask: PropTypes.bool
-    }),
-    uiActions: PropTypes.shape({
-      openModalCreateTask: PropTypes.func.isRequired
-    })
-  };
-
-  static getDerivedStateFromProps(newProps, state) {
-    const storedIsModalCreateTask = newProps.uiState.get('isModalCreateTask')
-    if (!state.isModalCreateTask || storedIsModalCreateTask !== state.isModalCreateTask)
-      return ({
-        isModalCreateTask: storedIsModalCreateTask
-      })
-    
-    return null
+    uiActions:    PropTypes.shape( {
+      openModalEditTask: PropTypes.func.isRequired,
+    } ),
+    tasksActions: PropTypes.shape( {
+      changeFilter: PropTypes.func.isRequired,
+    } ),
   }
   
-  state = {
-    sortField: undefined,
-    sortOrder: undefined,
-    isModalCreateTask: undefined
+  getColumns = () => {
+    return [
+      {
+        dataField: 'id',
+        text:      'id',
+        sort:      true,
+        onSort:    ( field, order ) => this.onSortChange( field, order ),
+      }, {
+        dataField: 'username',
+        text:      'Username',
+        sort:      true,
+        onSort:    ( field, order ) => this.onSortChange( field, order ),
+      }, {
+        dataField: 'email',
+        text:      'E-mail',
+        sort:      true,
+        onSort:    ( field, order ) => this.onSortChange( field, order ),
+      }, {
+        dataField: 'text',
+        text:      'Text',
+      }, {
+        dataField: 'status',
+        text:      'Confirmed',
+        sort:      true,
+        hidden:    true,
+        onSort:    ( field, order ) => this.onSortChange( field, order ),
+      },
+    ]
   }
-  
-  onSortChange = (sortField, sortOrder) => {
-    console.info('onSortChange', sortField, sortOrder);
-    this.setState({
-      sortField,
-      sortOrder
-    });
-    // todo: dispatch
+  getData = () => {
+    const { tasksState } = this.props
+    return tasksState.get( 'isLoaded' ) && !tasksState.get( 'isLoading' )
+           ? tasksState.get( 'tasks' ).toJS()
+           : []
+  }
+  getNoDataIndication = () => {
+    const { tasksState } = this.props
+    return tasksState
+             .get( 'isLoading' )
+           ? 'Data loading...'
+           : (!tasksState.get( 'isLoaded' )
+              ? `Not loaded (${tasksState.get( 'error' )})`
+              : 'No data')
+  }
+  getDefaultSorted = () => {
+    const { tasksState } = this.props
+    return [
+      {
+        dataField: tasksState.get( 'sort_field' ),
+        order:     tasksState.get( 'sort_direction' ),
+      },
+    ]
+  }
+  onSortChange = ( sortField, sortOrder ) => {
+    this.props.tasksActions.changeFilter( {
+      sort_field:     sortField,
+      sort_direction: sortOrder,
+    } )
+  }
+  confirmedClasses = ( row ) =>
+    (row.status === 10 && 'bg-success') || ''
+  rowEvents = {
+    onClick: ( e, row ) => {
+      const { loginState, uiActions } = this.props
+      if( !loginState.get( 'isLogin' ) ) return
+      uiActions.openModalEditTask( row.id )
+    },
   }
   
   render() {
-    
-    const {tasksState} = this.props
-    const columns = [{
-      dataField: 'id',
-      text: 'id',
-      sort: true
-    }, {
-      dataField: 'username',
-      text: 'Username',
-      sort: true,
-      onSort: (field, order) => this.onSortChange(field, order)
-    }, {
-      dataField: 'email',
-      text: 'E-mail',
-      sort: true,
-      onSort: (field, order) => this.onSortChange(field, order)
-    }, {
-      dataField: 'text',
-      text: 'Text'
-    }, {
-      dataField: 'status',
-      text: 'Confirmed',
-      sort: true,
-      onSort: (field, order) => this.onSortChange(field, order)
-    }];
-    const defaultSorted = [{
-      dataField: tasksState.get('sort_field'),
-      order: tasksState.get('sort_direction')
-    }]
-    
-    
     return (
       <BootstrapTable
         bootstrap4
         keyField='id'
-        data={tasksState.get('tasks').toJS()}
-        columns={columns}
-        defaultSorted={defaultSorted}
+        data={this.getData()}
+        columns={this.getColumns()}
+        defaultSorted={this.getDefaultSorted()}
+        rowClasses={this.confirmedClasses}
+        rowEvents={this.rowEvents}
+        noDataIndication={this.getNoDataIndication()}
       />
-    );
+    )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Table)
+export default connect( mapStateToProps, mapDispatchToProps )( Table )

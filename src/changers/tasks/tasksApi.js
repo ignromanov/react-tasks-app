@@ -1,22 +1,18 @@
-import {types} from "./types";
-import {tasksAPI} from "../../API";
+import { types } from './types'
 
 export default store => next => action => {
-  const {type, ...rest} = action
-  if (!callAPI) return next(action)
+  const { type, payload, callAPI, ...rest } = action
+  if( !callAPI ) return next( action )
   
-  next({
-    ...rest, type: type + START, callAPI
-  })
+  next( {
+    type: type + types.REQUEST, callAPI, payload, ...rest,
+  } )
   
-  const APIref = ETHERSCAN_API_REFERENCE + callAPI + `&apikey=${ETHERSCAN_API_KEY}`
-  setTimeout(() => { // timeout to show loader
-    fetch(APIref)
-      .then(res => res.json())
-      .then(response => {
-        if (response.status === '0') throw response.message
-        return next({...rest, type: type + SUCCESS, response})
-      })
-      .catch(error => next({...rest, type: type + FAIL, error}))
-  }, 1000)
+  callAPI( payload )
+    .then( res => res.json() )
+    .then( response => {
+      if( response.status === 'error' ) throw response.message
+      return next( { ...rest, type: type + types.SUCCESS, response: response.message } )
+    } )
+    .catch( error => next( { ...rest, type: type + types.FAIL, error } ) )
 }

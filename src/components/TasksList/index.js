@@ -1,17 +1,12 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import { card } from '../decorators'
-import {connect} from 'react-redux'
-import BootstrapTable from 'react-bootstrap-table-next'
-import Create from './Create'
+import React, { Component } from 'react'
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css'
-import {uiActions} from "../../changers/ui/actions";
-import {bindActionCreators} from "redux";
-import Table from "./Table";
-import PagePagination from "./PagePagination";
+import { card }             from '../decorators'
+import Create               from './Create'
+import PagePagination       from './PagePagination'
+import Table                from './Table'
 
 class TasksList extends Component {
-  static defaultProps = {};
+  static defaultProps = {}
   
   render() {
     return (
@@ -20,10 +15,10 @@ class TasksList extends Component {
         <PagePagination/>
         <Create/>
       </div>
-    );
+    )
   }
 }
 
 
 // export default TasksList;
-export default card('Список задач', TasksList)
+export default card( 'Список задач', TasksList )

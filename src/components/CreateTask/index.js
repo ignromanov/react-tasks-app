@@ -1,56 +1,54 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import PropTypes            from 'prop-types'
+import React, { Component } from 'react'
 
-import {connect} from 'react-redux'
+import { connect }            from 'react-redux'
+import { Modal, ModalHeader } from 'reactstrap'
 import { bindActionCreators } from 'redux'
-import { uiActions } from "../../changers/ui/actions";
-import CreateTaskForm from "./CreateTaskForm";
+import { uiActions }          from '../../changers/ui/actions'
+import CreateTaskForm         from './CreateTaskForm'
 
-const mapStateToProps = (state) => ({
-  uiState: state.uiState
+const mapStateToProps = ( state ) => ({
+  uiState: state.uiState,
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  uiActions: bindActionCreators({...uiActions}, dispatch)
+const mapDispatchToProps = ( dispatch ) => ({
+  uiActions: bindActionCreators( { ...uiActions }, dispatch ),
 })
 
-class AddNewTask extends Component {
+class CreateTask extends Component {
   static propTypes = {
-    uiState: PropTypes.shape({
-      isModalCreateTask: PropTypes.bool
-    }),
-    uiActions: PropTypes.shape({
-      closeModalAddNewTask: PropTypes.func.isRequired
-    })
-  };
+    uiState:   PropTypes.shape( {
+      isModalCreateTask: PropTypes.bool,
+    } ),
+    uiActions: PropTypes.shape( {
+      closeModalCreateTask: PropTypes.func.isRequired,
+    } ),
+  }
+  state = {
+    isModalCreateTask: undefined,
+  }
+  toggle = () =>
+    this.props.uiActions.closeModalCreateTask()
   
-  static getDerivedStateFromProps(newProps, state) {
-    const storedIsModalAddNewTask = newProps.uiState.get('isModalCreateTask')
-    if(!state.isModalCreateTask || storedIsModalAddNewTask !== state.isModalCreateTask)
+  static getDerivedStateFromProps( newProps, state ) {
+    const storedIsModalAddNewTask = newProps.uiState.get( 'isModalCreateTask' )
+    if( !state.isModalCreateTask || storedIsModalAddNewTask !== state.isModalCreateTask )
       return ({
-        isModalCreateTask: storedIsModalAddNewTask
+        isModalCreateTask: storedIsModalAddNewTask,
       })
     
     return null
   }
   
-  state = {
-    isModalCreateTask: undefined
-  }
-  
-  toggle = () =>
-    this.props.uiActions.closeModalAddNewTask()
-  
   render() {
-    const { isModalAddNewTask } = this.state
+    const { isModalCreateTask } = this.state
     return (
-      <Modal isOpen={isModalAddNewTask} toggle={this.toggle} className={this.props.className}>
-        <ModalHeader toggle={this.toggle}>Add new task</ModalHeader>
+      <Modal isOpen={isModalCreateTask} toggle={this.toggle} className={this.props.className}>
+        <ModalHeader toggle={this.toggle}>Create task</ModalHeader>
         <CreateTaskForm/>
       </Modal>
-    );
+    )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddNewTask);
+export default connect( mapStateToProps, mapDispatchToProps )( CreateTask )

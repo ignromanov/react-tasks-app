@@ -1,18 +1,18 @@
-import {types} from "./types";
+import { types } from './types'
 
 export const loginActions = {
-  confirmLogin: (username, password) => {
-    if(username === 'admin' && password === '123') {
+  confirmLogin: ( username, password ) => {
+    if( username === 'admin' && password === '123' ) {
       return {
-        type: types.LOGIN,
-        payload: { username }
+        type:    types.LOGIN,
+        payload: { username },
       }
     }
     return { type: null }
   },
   
   confirmLogout: () => ({
-    type: types.LOGOUT
-  })
+    type: types.LOGOUT,
+  }),
   
 }

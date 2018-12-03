@@ -1,46 +1,37 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux'
-import {
-  Button,
-  ModalBody,
-  ModalFooter,
-  Form,
-  FormGroup,
-  Label,
-  Input
-} from 'reactstrap';
-import { bindActionCreators } from 'redux'
-import {loginActions} from "../../changers/login/actions";
+import React, { Component }                                              from 'react'
+import { connect }                                                       from 'react-redux'
+import { Button, Form, FormGroup, Input, Label, ModalBody, ModalFooter } from 'reactstrap'
+import { bindActionCreators }                                            from 'redux'
+import { loginActions }                                                  from '../../changers/login/actions'
+import { uiActions }                                                     from '../../changers/ui/actions'
 
 
-const mapStateToProps = (state) => ({
-  // loginState: state.loginState
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  loginActions: bindActionCreators({...loginActions}, dispatch)
+const mapDispatchToProps = ( dispatch ) => ({
+  loginActions: bindActionCreators( { ...loginActions }, dispatch ),
+  uiActions:    bindActionCreators( { ...uiActions }, dispatch ),
 })
 
 class LoginForm extends Component {
-  static defaultProps = {};
+  static defaultProps = {}
   
-  static propTypes = {};
+  static propTypes = {}
   
   state = {
     username: '',
-    password: ''
+    password: '',
   }
   
-  handleUsernameChange = (ev) =>
-    this.setState({ username: ev.target.value })
+  handleUsernameChange = ( ev ) =>
+    this.setState( { username: ev.target.value } )
   
-  handlePasswordChange = (ev) =>
-    this.setState({ password: ev.target.value })
+  handlePasswordChange = ( ev ) =>
+    this.setState( { password: ev.target.value } )
   
   confirmLogin = () => {
     const { username, password } = this.state
-    this.props.loginActions.confirmLogin(username, password)
+    const { loginActions, uiActions } = this.props
+    loginActions.confirmLogin( username, password )
+    uiActions.closeModalLogin()
   }
   
   render() {
@@ -77,8 +68,8 @@ class LoginForm extends Component {
           <Button color="primary" onClick={this.confirmLogin}>Login</Button>
         </ModalFooter>
       </>
-    );
+    )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default connect( null, mapDispatchToProps )( LoginForm )
