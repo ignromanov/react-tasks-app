@@ -4,13 +4,14 @@ import BootstrapTable         from 'react-bootstrap-table-next'
 
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css'
 import { connect }            from 'react-redux'
+import { Badge, Button }      from 'reactstrap'
 import { bindActionCreators } from 'redux'
 import { tasksActions }       from '../../changers/tasks/actions'
 import { uiActions }          from '../../changers/ui/actions'
 
 const mapStateToProps = ( state ) => ({
   tasksState: state.tasksState,
-  loginState: state.loginState,
+  isLogin:    state.loginState.get( 'isLogin' ),
 })
 
 const mapDispatchToProps = ( dispatch ) => ({
@@ -20,6 +21,7 @@ const mapDispatchToProps = ( dispatch ) => ({
 
 class Table extends Component {
   static propTypes = {
+    isLogin:      PropTypes.bool.isRequired,
     uiActions:    PropTypes.shape( {
       openModalEditTask: PropTypes.func.isRequired,
     } ),
@@ -50,10 +52,22 @@ class Table extends Component {
         text:      'Text',
       }, {
         dataField: 'status',
-        text:      'Confirmed',
-        hidden:    true,
+        text:      'State',
+        sort:      true,
+        onSort:    this.onSortChange,
+        formatter: this.statusFormatter,
       },
     ]
+  }
+  
+  statusFormatter = ( cell, row ) => {
+    const { isLogin } = this.props
+    return (<div>
+      {row.status === 10
+       ? <Badge color='success'>Confirmed</Badge> : null}
+      {isLogin
+       ? <Button color='info' size="sm" className='float-right'>Edit</Button> : null}
+    </div>)
   }
   
   getData = () => {
@@ -88,13 +102,10 @@ class Table extends Component {
       sort_direction: sortOrder,
     } )
   
-  confirmedClasses = ( row ) =>
-    (row.status === 10 && 'bg-success') || ''
-  
   rowEvents = {
     onClick: ( e, row ) => {
-      const { loginState, uiActions } = this.props
-      if( !loginState.get( 'isLogin' ) ) return
+      const { isLogin, uiActions } = this.props
+      if( !isLogin ) return
       uiActions.openModalEditTask( row.id )
     },
   }
@@ -108,7 +119,6 @@ class Table extends Component {
         data={this.getData()}
         columns={this.getColumns()}
         defaultSorted={this.getDefaultSorted()}
-        rowClasses={this.confirmedClasses}
         rowEvents={this.rowEvents}
         noDataIndication={this.getNoDataIndication()}
       />

@@ -1,8 +1,9 @@
 import PropTypes                                                         from 'prop-types'
-import React, { PureComponent }                                              from 'react'
+import React, { PureComponent }                                          from 'react'
 import { connect }                                                       from 'react-redux'
 import { Button, Form, FormGroup, Input, Label, ModalBody, ModalFooter } from 'reactstrap'
 import { bindActionCreators }                                            from 'redux'
+import { tasksActions }                                                  from '../../changers/tasks/actions'
 import { loginActions }                                                  from '../../changers/login/actions'
 import { uiActions }                                                     from '../../changers/ui/actions'
 
@@ -10,6 +11,7 @@ import { uiActions }                                                     from '.
 const mapDispatchToProps = ( dispatch ) => ({
   loginActions: bindActionCreators( { ...loginActions }, dispatch ),
   uiActions:    bindActionCreators( { ...uiActions }, dispatch ),
+  tasksActions: bindActionCreators( { ...tasksActions }, dispatch ),
 })
 
 class LoginForm extends PureComponent {
@@ -20,6 +22,9 @@ class LoginForm extends PureComponent {
     uiActions:    PropTypes.shape( {
       closeModalLogin: PropTypes.func.isRequired,
     } ),
+    tasksActions: PropTypes.shape({
+      fetchTasks: PropTypes.func.isRequired
+    })
   }
   
   state = {
@@ -35,9 +40,11 @@ class LoginForm extends PureComponent {
   
   confirmLogin = () => {
     const { username, password } = this.state
-    const { loginActions, uiActions } = this.props
+    const { loginActions, uiActions, tasksActions } = this.props
     loginActions.confirmLogin( username, password )
     uiActions.closeModalLogin()
+    tasksActions.fetchTasks()
+    
   }
   
   render() {

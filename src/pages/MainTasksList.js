@@ -19,7 +19,17 @@ class MainTasksList extends Component {
         <CreateTask/>
         <EditTask/>
         <TasksList/>
-        <ToastContainer/>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={3000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange
+          draggable
+          pauseOnHover
+        />
       </div>
     )
   }

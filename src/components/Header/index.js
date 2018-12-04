@@ -14,26 +14,32 @@ import {
 }                             from 'reactstrap'
 import { bindActionCreators } from 'redux'
 import { loginActions }       from '../../changers/login/actions'
+import { tasksActions }       from '../../changers/tasks/actions'
 import { uiActions }          from '../../changers/ui/actions'
 
 
 const mapStateToProps = ( state ) => ({
-  uiState:    state.uiState,
-  loginState: state.loginState,
+  isModalLogin: state.uiState.get( 'isModalLogin' ),
+  loginState:   state.loginState,
 })
 
 const mapDispatchToProps = ( dispatch ) => ({
   uiActions:    bindActionCreators( { ...uiActions }, dispatch ),
   loginActions: bindActionCreators( { ...loginActions }, dispatch ),
+  tasksActions: bindActionCreators( { ...tasksActions }, dispatch ),
 })
 
 class Header extends React.Component {
   static propTypes = {
+    isModalLogin: PropTypes.bool.isRequired,
     uiActions:    PropTypes.shape( {
       openModalLogin: PropTypes.func.isRequired,
     } ),
     loginActions: PropTypes.shape( {
       confirmLogout: PropTypes.func.isRequired,
+    } ),
+    tasksActions: PropTypes.shape( {
+      fetchTasks: PropTypes.func.isRequired,
     } ),
   }
   
@@ -49,14 +55,15 @@ class Header extends React.Component {
     } )
   
   handleLoginClick = () => {
-    const { uiState, uiActions, loginActions } = this.props
+    const { isModalLogin, uiActions, loginActions, tasksActions } = this.props
     const { isLogin } = this.state
     
     if( !isLogin ) {
-      if( !uiState.get( 'isModalLogin' ) )
+      if( !isModalLogin )
         uiActions.openModalLogin()
     } else {
       loginActions.confirmLogout()
+      tasksActions.fetchTasks()
     }
   }
   

@@ -10,16 +10,12 @@ const mapDispatchToProps = ( dispatch ) => ({
 })
 
 class Create extends Component {
-  static defaultProps = {}
-  
   static propTypes = {
     uiActions: PropTypes.shape( {
       openModalCreateTask: PropTypes.func.isRequired,
     } ),
   }
-  state = {
-    isModalCreateTask: undefined,
-  }
+  
   handleCreateTask = () => {
     this.props.uiActions.openModalCreateTask()
   }
