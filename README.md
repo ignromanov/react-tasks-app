@@ -1,5 +1,10 @@
-## Приложение-задачник
+## Task-manager app
 
+App developed with React, Redux and some other components packages.
+You can see [demo](https://simple-tasks-app.herokuapp.com/).
+
+
+#### Task overview:
 Необходимо создать приложение-задачник.
 
 Документацию по back-end можно найти [тут](https://uxcandy.com/~shapoval/test-task-backend/docs.html) 
