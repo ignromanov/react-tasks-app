@@ -41,7 +41,7 @@ class PagePagination extends Component {
     
     // page numbers
     for( let i = 1; i <= totalPages; i++ ) {
-      if( i < page - 2 || i > page + 2 ) continue
+      if( i < page - 4 || i > page + 4 ) continue
       pagMap.push(
         <PaginationItem key={i} active={i === page && true}>
           <PaginationLink href="#" onClick={this.handleChangePage( i )}>
