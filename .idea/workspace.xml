@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="afc0eaa9-0216-44eb-ad2c-39db991d8dd6" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -80,14 +80,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="135">
-                <caret line="9" column="16" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
+              <first_editor relative-caret-position="390">
+                <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
               </first_editor>
               <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="23" column="14" selection-start-line="23" selection-start-column="14" selection-end-line="23" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -141,7 +150,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/components/decorators/index.js" />
         <option value="$PROJECT_DIR$/src/components/NewTask/index.js" />
         <option value="$PROJECT_DIR$/src/requests/ui.js" />
         <option value="$PROJECT_DIR$/src/requests/ui/types.js" />
@@ -192,6 +200,7 @@
         <option value="$PROJECT_DIR$/src/components/TasksList/Table.js" />
         <option value="$PROJECT_DIR$/src/components/TasksList/Create.js" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
@@ -343,7 +352,7 @@
       <updated>1543601047112</updated>
       <workItem from="1543601048791" duration="31244000" />
       <workItem from="1543785064154" duration="36189000" />
-      <workItem from="1543963505665" duration="197000" />
+      <workItem from="1543963505665" duration="926000" />
     </task>
     <task id="LOCAL-00001" summary="main commit">
       <created>1543752117349</created>
@@ -401,25 +410,39 @@
       <option name="project" value="LOCAL" />
       <updated>1543886829941</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="edit readme">
+      <created>1543963724647</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1543963724647</updated>
+    </task>
+    <task id="LOCAL-00010" summary="edit readme">
+      <created>1543964284688</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1543964284688</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="67630000" />
+    <option name="totallyTimeSpent" value="68359000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4969697" visible="true" weight="0.16842847" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4961715" visible="true" weight="0.16842847" />
       <window_info anchor="bottom" id="TODO" order="9" />
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
       <window_info anchor="bottom" x="21" y="435" width="1419" height="379" id="Run" order="10" weight="0.40242425" />
       <window_info anchor="bottom" id="Version Control" order="2" />
-      <window_info id="npm" order="2" sideWeight="0.5030303" side_tool="true" visible="true" weight="0.16842847" />
+      <window_info id="npm" order="2" sideWeight="0.50382847" side_tool="true" visible="true" weight="0.16842847" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" x="10" y="322" width="1419" height="256" id="Terminal" order="3" weight="0.20848484" />
+      <window_info anchor="bottom" x="10" y="322" width="1419" height="256" id="Terminal" order="3" visible="true" weight="0.20848484" />
       <window_info anchor="bottom" id="Debug" order="6" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="TypeScript" order="11" />
@@ -450,7 +473,8 @@
     <MESSAGE value="refactoring" />
     <MESSAGE value="add notification system&#10;full refactoring" />
     <MESSAGE value="edit propTypes" />
-    <option name="LAST_COMMIT_MESSAGE" value="edit propTypes" />
+    <MESSAGE value="edit readme" />
+    <option name="LAST_COMMIT_MESSAGE" value="edit readme" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -458,7 +482,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/logic/tasks.js" />
     <entry file="file://$PROJECT_DIR$/src/logic/index.js" />
     <entry file="file://$PROJECT_DIR$/src/requests/ui.js" />
     <entry file="file://$PROJECT_DIR$/node_modules/redux/index.d.ts">
@@ -784,10 +807,17 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="135">
-            <caret line="9" column="16" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
+          <first_editor relative-caret-position="390">
+            <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="14" selection-start-line="23" selection-start-column="14" selection-end-line="23" selection-end-column="14" />
         </state>
       </provider>
     </entry>
